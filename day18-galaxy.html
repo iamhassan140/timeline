@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Day 18 — Galaxy for You 🌌</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:#000;overflow:hidden;font-family:'Poppins',sans-serif}canvas{display:block}
+.ui{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:30px 20px;pointer-events:none;z-index:1}
+h1{font-family:'Comic Sans MS',cursive;color:#fff;font-size:clamp(1.1rem,4vw,1.8rem);text-align:center;text-shadow:0 0 20px rgba(150,100,255,0.8)}
+.name-tag{font-family:'Comic Sans MS',cursive;font-size:clamp(2rem,8vw,4rem);color:transparent;background:linear-gradient(90deg,#c9a46e,#ffd700,#c9a46e);-webkit-background-clip:text;background-clip:text;text-shadow:none;text-align:center;letter-spacing:6px;animation:shimmer 3s ease-in-out infinite}
+@keyframes shimmer{0%,100%{filter:brightness(1)}50%{filter:brightness(1.4)}}
+.bottom{font-family:'Comic Sans MS',cursive;color:rgba(255,255,255,0.3);font-size:clamp(0.75rem,2vw,0.9rem);text-align:center}
+</style></head><body>
+<canvas id="c"></canvas>
+<div class="ui">
+  <h1>🌌 A Galaxy — Named After You</h1>
+  <div class="name-tag">HER</div>
+  <p class="bottom">You are my entire universe 🌟</p>
+</div>
+<script>
+const c=document.getElementById('c'),ctx=c.getContext('2d');
+let W=c.width=innerWidth,H=c.height=innerHeight;
+window.addEventListener('resize',()=>{W=c.width=innerWidth;H=c.height=innerHeight});
+const stars=[];const colors=['#ffffff','#ffe8a1','#ffc0cb','#c8a8ff','#a8d8ff'];
+for(let i=0;i<400;i++)stars.push({x:Math.random()*2000-1000,y:Math.random()*2000-1000,z:Math.random()*1000,r:Math.random()*2+0.5,c:colors[Math.floor(Math.random()*colors.length)],a:Math.random()});
+let angle=0;
+function draw(){
+  ctx.fillStyle='rgba(0,0,0,0.15)';ctx.fillRect(0,0,W,H);
+  angle+=0.002;
+  const cx=W/2,cy=H/2;
+  // Galaxy arm
+  for(let i=0;i<200;i++){
+    const a=angle+i*0.15;const r=i*2.5;
+    const x=cx+Math.cos(a)*r+Math.cos(a+Math.PI)*r*0.3;
+    const y=cy+Math.sin(a)*r*0.5+Math.sin(a+Math.PI)*r*0.15;
+    const alpha=0.3+Math.sin(i*0.1+angle*3)*0.2;
+    ctx.save();ctx.globalAlpha=alpha;
+    ctx.beginPath();ctx.arc(x,y,Math.random()*2+0.5,0,Math.PI*2);
+    ctx.fillStyle=colors[i%colors.length];ctx.fill();ctx.restore();
+    const x2=cx+Math.cos(a+Math.PI)*r*0.8;
+    const y2=cy+Math.sin(a+Math.PI)*r*0.4;
+    ctx.save();ctx.globalAlpha=alpha*0.6;ctx.beginPath();ctx.arc(x2,y2,Math.random()*1.5+0.3,0,Math.PI*2);ctx.fillStyle=colors[(i+2)%colors.length];ctx.fill();ctx.restore();
+  }
+  stars.forEach(s=>{
+    const proj=1000/(1000-s.z%(1000));
+    const sx=cx+(s.x*proj);const sy=cy+(s.y*proj*0.5);
+    if(sx<0||sx>W||sy<0||sy>H)return;
+    ctx.save();ctx.globalAlpha=0.2+Math.sin(angle*2+s.a*10)*0.2;
+    ctx.beginPath();ctx.arc(sx,sy,s.r*proj*0.3,0,Math.PI*2);ctx.fillStyle=s.c;ctx.fill();ctx.restore();
+    s.z=(s.z+0.5)%1000;
+  });
+  requestAnimationFrame(draw);
+}draw();
+</script></body></html>
