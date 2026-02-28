@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Day 16 — Our Timeline 📅</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>*{margin:0;padding:0;box-sizing:border-box}body{background:linear-gradient(160deg,#0a0a0f,#0f0a1a);font-family:'Poppins',sans-serif;color:#fff;padding-bottom:60px}
+.hero{text-align:center;padding:60px 20px 40px}h1{font-family:'Comic Sans MS',cursive;font-size:clamp(1.4rem,4vw,2.5rem);color:#ffd700;text-shadow:0 0 20px #ffd700;margin-bottom:8px}.sub{font-family:'Comic Sans MS',cursive;color:rgba(255,215,0,0.4);font-size:0.85rem}
+.timeline{max-width:600px;margin:0 auto;padding:0 20px;position:relative}.timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,#ffd700,transparent);transform:translateX(-50%)}
+.item{display:flex;justify-content:flex-end;padding-right:calc(50% + 24px);margin-bottom:40px;opacity:0;transform:translateX(-20px);transition:all 0.6s}.item:nth-child(even){justify-content:flex-start;padding-right:0;padding-left:calc(50% + 24px);transform:translateX(20px)}.item.visible{opacity:1;transform:none}
+.item-card{background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:12px;padding:18px 20px;max-width:220px;position:relative}
+.item-card::after{content:'';position:absolute;top:50%;width:20px;height:2px;background:#ffd700;right:-20px}.item:nth-child(even) .item-card::after{right:auto;left:-20px}
+.dot{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:12px;height:12px;background:#ffd700;border-radius:50%;box-shadow:0 0 12px #ffd700;z-index:1}
+.item-emoji{font-size:1.5rem;margin-bottom:8px;display:block}.item-date{font-size:0.7rem;color:#ffd700;letter-spacing:1px;margin-bottom:4px}.item-title{font-family:'Comic Sans MS',cursive;font-size:0.9rem;color:#fff;line-height:1.5}
+</style></head><body>
+<div class="hero"><h1>📅 Our Timeline</h1><p class="sub">Every beautiful moment — written in gold ✨</p></div>
+<div class="timeline" id="tl"></div>
+<script>
+const events=[
+  {e:'🌅',date:'The Beginning',title:'We started talking — and somehow 2 hours passed like 2 minutes.'},
+  {e:'🎲',date:'Our First Game',title:'We played Ludo together. I let you win. Maybe. 😄'},
+  {e:'💬',date:'Daily Conversations',title:'Every single day — 2 hours felt like never enough.'},
+  {e:'❤️',date:'The Three Words',title:'You said "I love you" and I forgot how to breathe for a moment.'},
+  {e:'📱',date:'Reels & Reactions',title:'Every reel you sent felt like you were sharing a piece of your world with me.'},
+  {e:'⭐',date:'Stories',title:'I started posting for you — hoping you would know it was all for you.'},
+  {e:'🔒',date:'Trust',title:'You trusted me completely. That is the most precious thing I own.'},
+  {e:'⏳',date:'The Promise',title:'4 years. I said okay. I meant it completely.'},
+  {e:'💻',date:'Day 1 of 30',title:'I started building something every day — just so you know I think of you always.'},
+  {e:'🌹',date:'Our Future',title:'This is not the end of our timeline. It is just the beginning. 💛'},
+];
+const tl=document.getElementById('tl');
+events.forEach((ev,i)=>{
+  const d=document.createElement('div');d.className='item';
+  d.innerHTML=`<div class="item-card"><span class="item-emoji">${ev.e}</span><div class="item-date">${ev.date}</div><p class="item-title">${ev.title}</p></div>`;
+  const dot=document.createElement('div');dot.className='dot';dot.style.top=(i/(events.length-1)*100)+'%';
+  tl.appendChild(d);
+});
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.2});
+document.querySelectorAll('.item').forEach(r=>obs.observe(r));
+</script></body></html>
