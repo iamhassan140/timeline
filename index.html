@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 15 — Why I Wait 💜</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:linear-gradient(160deg,#0a0514,#140a1e,#0a0514);font-family:'Poppins',sans-serif;color:#fff}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px}
+h1{font-family:'Comic Sans MS',cursive;font-size:clamp(1.5rem,5vw,3rem);color:#e2d9f3;text-shadow:0 0 30px #9b59b6;margin-bottom:12px}
+.sub{font-family:'Comic Sans MS',cursive;color:rgba(226,217,243,0.5);font-size:clamp(0.85rem,2.5vw,1.05rem);margin-bottom:50px}
+.reasons{max-width:600px;margin:0 auto;padding:0 20px}
+.reason{
+  opacity:0;transform:translateX(-30px);transition:all 0.6s ease;
+  background:rgba(155,89,182,0.08);border-left:3px solid #9b59b6;
+  border-radius:0 12px 12px 0;padding:20px 24px;margin-bottom:16px;text-align:left;
+}
+.reason.visible{opacity:1;transform:none}
+.reason-num{font-size:0.7rem;color:#9b59b6;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.reason-text{font-family:'Comic Sans MS',cursive;font-size:clamp(0.9rem,2.5vw,1.05rem);color:#e2d9f3;line-height:1.7}
+.end{min-height:50vh;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.end-text{font-family:'Comic Sans MS',cursive;font-size:clamp(1.3rem,4vw,2.2rem);color:#e2d9f3;text-align:center;max-width:500px;line-height:1.6;text-shadow:0 0 20px #9b59b6}
+</style>
+</head>
+<body>
+<div class="hero">
+  <h1>💜 Why I Wait For You</h1>
+  <p class="sub">Scroll down to read every reason 🌙</p>
+</div>
+<div class="reasons" id="reasons"></div>
+<div class="end"><p class="end-text">"Four years is nothing when the person is everything." 💜</p></div>
+<script>
+const reasons=[
+  "Because you are the kind of rare that does not come twice in a lifetime.",
+  "Because the way you trusted me — that is not something I take lightly.",
+  "Because every conversation with you felt like finding something I had lost.",
+  "Because you make me want to be genuinely better — not to impress, but because you inspire it.",
+  "Because your laugh is worth every single day of patience.",
+  "Because when you said 'I love you' — I felt it in places words cannot reach.",
+  "Because you are not just someone I want — you are someone I deeply respect.",
+  "Because the thought of giving up on this is genuinely impossible.",
+  "Because you deserve someone who chooses you consistently — and I want to be that person.",
+  "Because 4 years from now — I want to be standing there, having kept every word.",
+  "Because loving you is not a burden. It is the most natural thing I have ever done.",
+  "Because you are worth every poem, every project, every sleepless night.",
+];
+const container=document.getElementById('reasons');
+reasons.forEach((r,i)=>{
+  const d=document.createElement('div');d.className='reason';
+  d.innerHTML=`<div class="reason-num">Reason ${String(i+1).padStart(2,'0')}</div><p class="reason-text">${r}</p>`;
+  container.appendChild(d);
+});
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.2});
+document.querySelectorAll('.reason').forEach(r=>obs.observe(r));
+</script>
+</body>
+</html>
